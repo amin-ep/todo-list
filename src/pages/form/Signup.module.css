@@ -1,0 +1,108 @@
+.container {
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
+}
+
+.heading-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px 5px 0 0;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
+}
+
+.container form {
+  padding: 15px;
+  margin: 2rem 1rem 1rem 1rem;
+}
+
+.controls {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+hr {
+  margin: 0;
+  color: #ccc;
+}
+
+.controls .label {
+  position: absolute;
+  top: 23px;
+  font-size: 1.1rem;
+  font-weight: 300;
+  cursor: auto;
+  transition: 0.3s;
+  left: 12px;
+}
+
+.controls input {
+  border: none;
+  outline: none;
+  padding: 1.8rem 0.75rem 0.8rem;
+  font-size: 18px;
+  border-radius: 3px;
+}
+
+.controls input:focus,
+.controls input:checked {
+  background-color: #ced4da;
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
+}
+
+.controls input:focus ~ .label,
+.controls input:valid ~ .label {
+  top: -0.0000001rem;
+  font-size: 14px;
+}
+
+.controls input[type="text"] {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.controls input[type="password"] {
+  border-radius: 0;
+}
+
+.actions {
+  margin: 2rem 0;
+}
+
+.actions button {
+  background-color: #ffffff28;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
+  box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  font-size: 18px;
+  color: #fff;
+  padding: 1rem;
+  transition: 0.3s;
+}
+
+.actions button:hover {
+  box-shadow: unset;
+  color: var(--color-light-blue);
+  box-shadow: 0 0 5px #fff, 0 0 25px #fff, 0 0 50px #fff, 0 0 100px #fff;
+  background-color: #fff;
+}
+
+.copyright {
+  text-align: center;
+  color: #ffffffa6;
+}

@@ -1,0 +1,45 @@
+.empty {
+  display: flex;
+  justify-content: center;
+  animation: textAnimation 1s infinite alternate;
+}
+
+.empty p {
+  text-transform: uppercase;
+  font-size: 80px;
+}
+
+@keyframes textAnimation {
+  0% {
+    letter-spacing: 2px;
+    color: #000;
+  }
+  10% {
+    letter-spacing: 2px;
+    color: var(--color-light-blue);
+  }
+  10% {
+    letter-spacing: 2px;
+    color: var(--color-light-blue-hover);
+  }
+  20% {
+    letter-spacing: 2px;
+    color: var(--color-tomato);
+  }
+  40% {
+    letter-spacing: 2px;
+    color: var(--color-tomato-hover);
+  }
+  60% {
+    letter-spacing: 2px;
+    color: var(--color-danger);
+  }
+  80% {
+    letter-spacing: 2px;
+    color: var(--color-danger-hover);
+  }
+  100% {
+    letter-spacing: 14px;
+    color: var(--color-tomato);
+  }
+}
