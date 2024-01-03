@@ -10,10 +10,8 @@ import Empty from "./Empty";
 
 export default function TodoListItem(props) {
   const [todos, setTodos] = useState(props.items);
-  const [completed, setCompleted] = useState(false);
 
   const deleteTodo = useCallback(async (id) => {
-    setTodos((prevState) => prevState.filter((item) => item.id !== id));
     try {
       const response = await fetch(
         `http://127.0.0.1:8090/api/collections/todo/records/${id}`,
@@ -23,6 +21,8 @@ export default function TodoListItem(props) {
       );
       if (!response.ok) {
         throw new Error("Error deleting todo item.");
+      } else {
+        setTodos((prevState) => prevState.filter((item) => item.id !== id));
       }
       const data = await response.json();
       const todo = data.items.filter((item) => item.id !== id);
@@ -32,16 +32,14 @@ export default function TodoListItem(props) {
     }
   }, []);
 
-  const completeTodo = async (id) => {
-    const data = {
-      id: id,
-      completed: completed,
-    };
-    setCompleted(!completed);
+  const checkInputChangeHandler = async (id) => {
     try {
+      const data = todos.map((item) =>
+        item.id === id ? { ...item, completed: !item.completed } : item
+      );
       const response = await axios.patch(
         `http://127.0.0.1:8090/api/collections/todo/records/${id}`,
-        data,
+        data.find((item) => item.id === id),
         {
           headers: {
             "Content-Type": "application/json",
@@ -53,7 +51,6 @@ export default function TodoListItem(props) {
       console.error(err);
     }
   };
-
   return (
     <>
       {todos.map((item) => (
@@ -66,7 +63,7 @@ export default function TodoListItem(props) {
               type="checkbox"
               name="checkbox"
               defaultChecked={item.completed}
-              onClick={() => completeTodo(item.id)}
+              onChange={() => checkInputChangeHandler(item.id)}
             />
             <Link to={`edit/${item.id}`} className={classes["edit-link"]}>
               <i>
