@@ -99,8 +99,7 @@ hr {
 .actions button:hover {
   box-shadow: unset;
   color: var(--color-light-blue);
-  box-shadow: 0 0 5px #fff, 0 0 25px #fff, 0 0 50px #fff,
-  0 0 100px #fff;
+  box-shadow: 0 0 5px #fff, 0 0 25px #fff, 0 0 50px #fff, 0 0 100px #fff;
   background-color: #fff;
 }
 

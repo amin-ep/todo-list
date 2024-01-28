@@ -90,9 +90,9 @@ body {
       transparent 96%
     ),
     linear-gradient(135deg, rgb(23, 233, 173), rgb(29, 24, 208));
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
   margin: 0;
 }
 

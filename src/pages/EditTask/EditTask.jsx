@@ -14,40 +14,44 @@ export default function EditTask() {
   const [title, setTitle] = useState("");
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getCurrentTodo = async() => {
+  const getCurrentTodo = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8090/api/collections/todo/records/${params.id}`);
-      const data = await response.json();
-      const currentTodo = data.title;
-      console.log(currentTodo);
-      setTitle(currentTodo)
-    } catch(err) {
+      const response = await fetch(
+        `http://localhost:1337/api/todolists/${params.id}`
+      );
+      const todoData = await response.json();
+      setTitle(todoData.data.attributes.title);
+    } catch (err) {
       console.error(err);
     }
   };
 
   useEffect(() => {
     getCurrentTodo();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const updateTask = async () => {
     try {
       const data = {
-        title: title,
+        data: {
+          title: title,
+        },
       };
-      const response = await axios.patch(
-        `http://127.0.0.1:8090/api/collections/todo/records/${params.id}`,
-        data,
+      const response = await fetch(
+        `http://localhost:1337/api/todolists/${params.id}`,
         {
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify(data),
         }
       );
-      console.log(response.data, "response");
+      const responseData = await response.json();
+      console.log(responseData);
     } catch (err) {
-      console.log(err);
+      console.error(err.message);
     }
   };
 
@@ -58,8 +62,8 @@ export default function EditTask() {
   const formSubmitHandler = (event) => {
     event.preventDefault();
     updateTask();
-    navigate('/')
-  }
+    navigate("/");
+  };
 
   return (
     <Container className={classes.container}>

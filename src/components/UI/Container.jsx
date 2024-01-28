@@ -5,5 +5,9 @@ import classes from "./Container.module.css";
 
 // eslint-disable-next-line no-unused-vars
 export default function Container(props) {
-  return <div className={`${classes.container} ${props.className}`}>{props.children}</div>;
+  return (
+    <div className={`${classes.container} ${props.className}`}>
+      {props.children}
+    </div>
+  );
 }

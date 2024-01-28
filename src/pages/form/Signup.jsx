@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useContext, useRef } from "react";
-import classes from "./Authentication.module.css";
+import classes from "./Signup.module.css";
 import Container from "../../components/UI/Container";
 function Signup() {
   return (

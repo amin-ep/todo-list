@@ -6,40 +6,33 @@ import { IoMdAddCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 export default function TodoList() {
-  const [task, setTask] = useState([]);
-  const [loading, setLoading] = useState(false);
-
+  const [todosItem, setTodosItem] = useState([]);
   const getTodos = useCallback(async () => {
-    setLoading(true);
-    // setTimeout(() => {
-    //   setLoading(false);
-    // },2000);
     try {
-      const response = await fetch(
-        "http://127.0.0.1:8090/api/collections/todo/records"
-      );
-      const data = await response.json();
-      const transformedTodos = data.items.map((todosData) => {
+      const BASE_URL = "http://localhost:1337";
+      const response = await fetch(`${BASE_URL}/api/todolists`);
+      const todosData = await response.json();
+      const transformedData = todosData.data.map((item) => {
         return {
-          id: todosData.id,
-          title: todosData.title,
-          completed: todosData.completed,
+          id: item.id,
+          title: item.attributes.title,
+          completed: item.attributes.completed,
         };
       });
-      setTask(transformedTodos);
-    } catch (error) {
-      console.error(error);
+      setTodosItem(transformedData);
+    } catch (err) {
+      console.error(err);
     }
-    setLoading(false);
   }, []);
 
   useEffect(() => {
     getTodos();
   }, [getTodos]);
-
   return (
     <ul className={classes.list}>
-      <div>{loading ? <p>Loading...</p> : <TodoListItem items={task} />}</div>
+      <div>
+        <TodoListItem items={todosItem} />
+      </div>
       <div className={classes["link-wrapper"]}>
         <Link to="/create" className={classes.link}>
           New Task

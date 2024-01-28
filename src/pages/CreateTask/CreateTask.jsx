@@ -18,26 +18,22 @@ function CreateTask() {
     setFormIsValid(event.target.value.trim().length > 3);
   };
 
-  const createTodo = async (id) => {
+  const createTodo = async () => {
     try {
       const data = {
         title: title,
       };
-      setTitle((curState) => curState.concat(item => item.id === id))
-
-      const response = await axios.post(
-        "http://127.0.0.1:8090/api/collections/todo/records",
+      console.log(data);
+      const BASE_URL = "http://localhost:1337";
+      const response = await axios.post(`${BASE_URL}/api/todolists`, {
         data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       console.log(response.data);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -57,7 +53,7 @@ function CreateTask() {
     <Container className={classes.container}>
       <header className={classes.header}>
         <Link to="/" className={classes["back-to-home-link"]}>
-          <span className={classes['link-arrow']}>←</span>Back To Home Page
+          <span className={classes["link-arrow"]}>←</span>Back To Home Page
         </Link>
         <h2 className={classes.heading}>Create Task</h2>
       </header>

@@ -1,6 +1,7 @@
 .list {
   list-style-type: none;
-  background-color: #fff;
+  background-color: transparent;
+  backdrop-filter: blur(2px);
   border-radius: 3px;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
   padding: 1rem;

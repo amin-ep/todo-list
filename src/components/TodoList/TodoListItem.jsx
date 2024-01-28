@@ -1,56 +1,60 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import classes from "./TodoListItem.module.css";
 import { MdDeleteForever, MdOutlineModeEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import Empty from "./Empty";
-
 export default function TodoListItem(props) {
   const [todos, setTodos] = useState(props.items);
 
+  useEffect(() => {
+    setTodos(props.items);
+  }, [props.items]);
+
   const deleteTodo = useCallback(async (id) => {
     try {
-      const response = await fetch(
-        `http://127.0.0.1:8090/api/collections/todo/records/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const BASE_URL = "http://localhost:1337";
+      const response = await fetch(`${BASE_URL}/api/todolists/${id}`, {
+        method: "DELETE",
+      });
       if (!response.ok) {
         throw new Error("Error deleting todo item.");
       } else {
         setTodos((prevState) => prevState.filter((item) => item.id !== id));
       }
-      const data = await response.json();
-      const todo = data.items.filter((item) => item.id !== id);
-      console.log(todo, "todo");
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
-  const checkInputChangeHandler = async (id) => {
-    try {
-      const data = todos.map((item) =>
-        item.id === id ? { ...item, completed: !item.completed } : item
-      );
-      const response = await axios.patch(
-        `http://127.0.0.1:8090/api/collections/todo/records/${id}`,
-        data.find((item) => item.id === id),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log(response.data);
     } catch (err) {
       console.error(err);
     }
-  };
+  }, []);
+
+  const checkInputChangeHandler = useCallback(
+    async (id) => {
+      try {
+        const data = todos.map((item) =>
+          item.id === id ? { ...item, completed: !item.completed } : item
+        );
+        const selectedData = {
+          data: data.find((item) => item.id === id),
+        };
+        const response = await fetch(
+          `http://localhost:1337/api/todolists/${id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(selectedData),
+          }
+        );
+        const responseData = await response.json();
+        console.log(responseData);
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    [todos]
+  );
   return (
     <>
       {todos.map((item) => (
@@ -77,10 +81,8 @@ export default function TodoListItem(props) {
               <MdDeleteForever />
             </button>
           </div>
-          {console.log(item.completed)}
         </li>
       ))}
-      {!props.items.length > 0 && <Empty />}
     </>
   );
 }

@@ -1,9 +1,9 @@
 .header {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 0.75rem;
-    font-family: sans-serif;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0.75rem;
+  font-family: sans-serif;
 }
 
 .logo {
@@ -19,54 +19,54 @@
 }
 
 .auth-links {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 .auth-links a {
-    text-decoration: none;
-    padding: 0.5rem 1rem;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
 }
 
 .auth-links a:nth-child(1) {
-    background-color: #fff;
-    color: var(--color-tomato);
-    font-weight: bold;
-    border-radius: 6px 0 0 6px;
+  background-color: #fff;
+  color: var(--color-tomato);
+  font-weight: bold;
+  border-radius: 6px 0 0 6px;
 }
 
 .auth-links a:nth-child(1):hover {
-    background-color: var(--color-tomato-hover);
-    color: #fff;
+  background-color: var(--color-tomato-hover);
+  color: #fff;
 }
 
 .auth-links a:nth-child(2) {
-    border-radius: 0 6px 6px 0;
-    background-color: var(--color-light-blue);
-    color: #fff;
+  border-radius: 0 6px 6px 0;
+  background-color: var(--color-light-blue);
+  color: #fff;
 }
 
 .auth-links a:nth-child(2):hover {
-    background-color: var(--color-light-blue-hover);
+  background-color: var(--color-light-blue-hover);
 }
 
 .logout {
-    background-color: transparent;
-    border: 2px solid var(--color-tomato);
-    outline: none;
-    cursor: pointer;
-    border-radius: 6px;
-    color: var(--color-tomato);
-    font-size: 18px;
-    padding: 0.5rem 1rem;
-    font-weight: bold;
-    transition: 0.3s all;
+  background-color: transparent;
+  border: 2px solid var(--color-tomato);
+  outline: none;
+  cursor: pointer;
+  border-radius: 6px;
+  color: var(--color-tomato);
+  font-size: 18px;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  transition: 0.3s all;
 }
 
 .logout:hover {
-    box-shadow: 0 0 5px var(--color-tomato), 0 0 25px var(--color-tomato), 0 0 50px var(--color-tomato),
-    0 0 100px var(--color-tomato);
-    background-color: var(--color-tomato);
-    color: #fff;
+  box-shadow: 0 0 5px var(--color-tomato), 0 0 25px var(--color-tomato),
+    0 0 50px var(--color-tomato), 0 0 100px var(--color-tomato);
+  background-color: var(--color-tomato);
+  color: #fff;
 }
