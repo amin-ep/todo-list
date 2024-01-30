@@ -30,12 +30,7 @@
   position: relative;
   flex-direction: column;
   padding: 0;
-  margin: 0;
-}
-
-hr {
-  margin: 0;
-  color: #ccc;
+  margin: 0.5rem 0;
 }
 
 .controls .label {
@@ -66,15 +61,6 @@ hr {
 .controls input:valid ~ .label {
   top: -0.0000001rem;
   font-size: 14px;
-}
-
-.controls input[type="text"] {
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.controls input[type="password"] {
-  border-radius: 0;
 }
 
 .actions {

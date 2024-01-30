@@ -34,3 +34,51 @@
   letter-spacing: 3px;
   background-color: var(--color-light-blue);
 }
+
+.message {
+  text-align: center;
+  color: #fff;
+}
+
+.message-header {
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: 0.5s linear;
+  font-size: 30px;
+  animation: animatedText 1.5s infinite reverse linear;
+}
+
+.message-text a {
+  font-size: 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.12s linear;
+}
+
+.message-text a:hover {
+  color: var(--color-tomato-hover);
+  text-decoration: wavy underline var(--color-tomato-hover);
+}
+
+@keyframes animatedText {
+  0% {
+    text-shadow: 0 0 0px #fff, 0 0 0px #fff, 0 0 0px #fff;
+  }
+  20% {
+    text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 8px #fff;
+  }
+  40% {
+    text-shadow: 0 0 4px #fff, 0 0 8px #fff, 0 0 16px #fff;
+  }
+  60% {
+    text-shadow: 0 0 6px #fff, 0 0 12px #fff, 0 0 24px #fff;
+  }
+  80% {
+    text-shadow: 0 0 8px #fff, 0 0 16px #fff, 0 0 32px #fff;
+  }
+  100% {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff;
+  }
+}
