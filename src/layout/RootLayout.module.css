@@ -69,4 +69,5 @@
     0 0 50px var(--color-tomato), 0 0 100px var(--color-tomato);
   background-color: var(--color-tomato);
   color: #fff;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff;
 }

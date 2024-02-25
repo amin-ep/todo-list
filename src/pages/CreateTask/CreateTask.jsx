@@ -3,12 +3,13 @@ import classes from "./CreateTask.module.css";
 import { MdSaveAs } from "react-icons/md";
 import Container from "../../components/UI/Container";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { AUTH_TOKEN, BEARER } from "../../constant/constant";
+import Cookies from "js-cookie";
 function CreateTask() {
   const [title, setTitle] = useState("");
   const [formIsValid, setFormIsValid] = useState(false);
   const navigate = useNavigate();
-
+  const token = Cookies.get(AUTH_TOKEN);
   const titleInputChangeHandler = (event) => {
     setTitle(event.target.value);
     setFormIsValid(event.target.value.trim().length > 3);
@@ -18,20 +19,42 @@ function CreateTask() {
     setFormIsValid(event.target.value.trim().length > 3);
   };
 
-  const createTodo = async () => {
+  const getUserInfo = async () => {
     try {
-      const data = {
-        title: title,
-      };
-      console.log(data);
       const BASE_URL = "http://localhost:1337";
-      const response = await axios.post(`${BASE_URL}/api/todolists`, {
-        data,
+      const response = await fetch(`${BASE_URL}/api/users/me`, {
+        headers: { Authorization: `${BEARER} ${token}` },
+      });
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const createTodo = async () => {
+    const userData = await getUserInfo();
+    try {
+      const body = {
+        data: {
+          title: title,
+          user: {
+            ...userData,
+          },
+        },
+      };
+
+      const BASE_URL = "http://localhost:1337";
+      const response = await fetch(`${BASE_URL}/api/todolists?populate=user`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(body),
       });
-      console.log(response.data);
+      const data = await response.json();
+      console.log(data);
     } catch (err) {
       console.error(err);
     }

@@ -1,5 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
+import { AUTH_TOKEN } from "../constant/constant";
+import Cookies from "js-cookie";
+
 const AuthContext = React.createContext({
   isLoggedIn: false,
   onLoading: false,
@@ -10,10 +13,11 @@ const AuthContext = React.createContext({
 
 export const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoadig] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const authToken = Cookies.get(AUTH_TOKEN);
 
   const signupHandler = async (body) => {
-    setIsLoadig(true);
+    setIsLoading(true);
     try {
       const response = await fetch(
         "http://localhost:1337/api/auth/local/register",
@@ -25,22 +29,26 @@ export const AuthContextProvider = (props) => {
           body: JSON.stringify(body),
         }
       );
-      const responseData = await response.json();
-      console.log(responseData);
-      if (response.ok) {
-        setIsLoggedIn(true);
+      const data = await response.json();
+      if (data?.error) {
+        throw data?.error;
+      } else {
+        Cookies.set(AUTH_TOKEN, data.jwt, { expires: 7 });
+        const getToken = Cookies.get(AUTH_TOKEN);
+        if (getToken) {
+          setIsLoggedIn(true);
+        }
       }
     } catch (error) {
       console.error(error);
-      setIsLoadig(false);
     } finally {
-      setIsLoadig(false);
+      setIsLoading(false);
     }
   };
 
   const loginHandler = async (body) => {
+    setIsLoading(true);
     try {
-      setIsLoadig(true);
       const response = await fetch("http://localhost:1337/api/auth/local", {
         method: "POST",
         headers: {
@@ -48,31 +56,30 @@ export const AuthContextProvider = (props) => {
         },
         body: JSON.stringify(body),
       });
-      const responseData = await response.json();
-      console.log(responseData);
-      if (response.ok) {
-        sessionStorage.setItem("isLoggedIn", "1");
+      const data = await response.json();
+      if (data?.error) {
+        throw data?.error;
+      } else {
+        Cookies.set(AUTH_TOKEN, data.jwt, { expires: 7 });
+        console.log(data.jwt);
         setIsLoggedIn(true);
       }
     } catch (error) {
       console.error(error);
-      setIsLoadig(false);
     } finally {
-      setIsLoadig(false);
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    const storedInfoInStorage = sessionStorage.getItem("isLoggedIn");
-
-    if (storedInfoInStorage === "1") {
+    if (authToken) {
       setIsLoggedIn(true);
     }
-  }, []);
+  }, [authToken]);
 
   const logoutHandler = () => {
     setIsLoggedIn(false);
-    sessionStorage.removeItem("isLoggedIn");
+    Cookies.remove(AUTH_TOKEN);
   };
   return (
     <AuthContext.Provider

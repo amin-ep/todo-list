@@ -5,20 +5,29 @@ import classes from "./TodoList.module.css";
 import TodoListItem from "./TodoListItem";
 import { IoMdAddCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
+import Loading from "../UI/Loading";
+import { AUTH_TOKEN, BEARER } from "../../constant/constant";
+import Cookies from "js-cookie";
 import AuthContext from "../../context/AuthContext";
 export default function TodoList() {
   const [todosItem, setTodosItem] = useState([]);
   const authCtx = useContext(AuthContext);
   const getTodos = useCallback(async () => {
+    const token = Cookies.get(AUTH_TOKEN);
     try {
       const BASE_URL = "http://localhost:1337";
-      const response = await fetch(`${BASE_URL}/api/todolists`);
+      const response = await fetch(
+        `${BASE_URL}/api/users/me?populate=todolists`,
+        {
+          headers: { Authorization: `${BEARER} ${token}` },
+        }
+      );
       const todosData = await response.json();
-      const transformedData = todosData.data.map((item) => {
+      const transformedData = todosData.todolists.map((item) => {
         return {
           id: item.id,
-          title: item.attributes.title,
-          completed: item.attributes.completed,
+          title: item.title,
+          completed: item.completed,
         };
       });
       setTodosItem(transformedData);
@@ -28,8 +37,10 @@ export default function TodoList() {
   }, []);
 
   useEffect(() => {
-    getTodos();
-  }, [getTodos]);
+    {
+      authCtx.isLoggedIn && getTodos();
+    }
+  }, [getTodos, authCtx]);
   return (
     <ul className={classes.list}>
       {authCtx.isLoggedIn ? (
@@ -47,13 +58,22 @@ export default function TodoList() {
           </div>
         </>
       ) : (
-        <div className={classes.message}>
-          <h2 className={classes["message-header"]}>You Are Not Logged In!</h2>
-          <h4 className={classes["message-text"]}>
-            Click <Link to="/login">Here</Link> to Login or if you don't have an
-            account click <Link to="/signup">Here</Link> to create an account
-          </h4>
-        </div>
+        <>
+          {authCtx.onLoading ? (
+            <Loading />
+          ) : (
+            <div className={classes.message}>
+              <h2 className={classes["message-header"]}>
+                You Are Not Logged In!
+              </h2>
+              <h4 className={classes["message-text"]}>
+                Click <Link to="/login">Here</Link> to Login or if you don't
+                have an account click <Link to="/signup">Here</Link> to create
+                an account
+              </h4>
+            </div>
+          )}
+        </>
       )}
     </ul>
   );
