@@ -1,0 +1,112 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.2rem;
+  border-radius: 0.35rem;
+  -moz-border-radius: 0.35rem;
+  -ms-border-radius: 0.35rem;
+  -o-border-radius: 0.35rem;
+  background-color: var(--color-white);
+  -webkit-border-radius: 0.35rem;
+}
+
+.item-left {
+  padding-left: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--color-gray-800);
+}
+
+.completed {
+  text-decoration: line-through;
+  font-style: italic;
+
+  color: var(--color-gray-500);
+}
+
+.item-right {
+  display: flex;
+  gap: 1rem;
+}
+
+.action {
+  all: unset;
+  cursor: pointer;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  color: var(--color-gray-600);
+}
+
+.edit:hover {
+  color: var(--color-purple-400);
+}
+
+.delete:hover {
+  color: var(--color-rose-400);
+}
+
+.delete::before {
+  background-color: var(--color-rose-400);
+}
+
+.edit::before {
+  background-color: var(--color-purple-400);
+}
+.action:hover > .icon {
+  transform: translateY(-5px) scale(1.15);
+  -webkit-transform: translateY(-5px) scale(1.15);
+  -moz-transform: translateY(-5px) scale(1.15);
+  -ms-transform: translateY(-5px) scale(1.15);
+  -o-transform: translateY(-5px) scale(1.15);
+}
+
+.action::before {
+  position: absolute;
+  bottom: -1rem;
+  z-index: -1;
+  width: 8px;
+  height: 8px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  -webkit-transform: translate(-50%, 0);
+  -moz-transform: translate(-50%, 0);
+  -ms-transform: translate(-50%, 0);
+  -o-transform: translate(-50%, 0);
+  content: "";
+  transition: 0.3s all;
+  opacity: 0;
+  -webkit-transition: 0.3s all;
+  -moz-transition: 0.3s all;
+  -ms-transition: 0.3s all;
+  -o-transition: 0.3s all;
+  border-radius: 999px;
+  -webkit-border-radius: 999px;
+  -moz-border-radius: 999px;
+  -ms-border-radius: 999px;
+  -o-border-radius: 999px;
+}
+
+.icon {
+  transition: 0.3s all;
+  -webkit-transition: 0.3s all;
+  -moz-transition: 0.3s all;
+  -ms-transition: 0.3s all;
+  -o-transition: 0.3s all;
+}
+
+.action:hover::before {
+  opacity: 100;
+  bottom: -0.55rem;
+  z-index: 1;
+}

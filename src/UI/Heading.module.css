@@ -1,0 +1,9 @@
+.heading {
+  font-size: 40px;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.281);
+  text-align: center;
+
+  color: var(--color-white);
+}

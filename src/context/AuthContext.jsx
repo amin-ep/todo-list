@@ -1,75 +1,56 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
-import { AUTH_TOKEN } from "../constant/constant";
 import Cookies from "js-cookie";
+import { AUTH_TOKEN_KEY, errorMessage } from "../utils/constants";
+import { useMutation } from "@tanstack/react-query";
+import { login, signup } from "../services/authApi";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = React.createContext({
   isLoggedIn: false,
-  onLoading: false,
+  isLoggingIn: false,
+  isSigningUp: false,
   onSignUp: () => {},
   onLogin: () => {},
-  onLogout: () => {},
+  logout: () => {},
 });
 
 export const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const authToken = Cookies.get(AUTH_TOKEN);
+  const authToken = Cookies.get(AUTH_TOKEN_KEY);
 
-  const signupHandler = async (body) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        "http://localhost:1337/api/auth/local/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-      const data = await response.json();
-      if (data?.error) {
-        throw data?.error;
-      } else {
-        Cookies.set(AUTH_TOKEN, data.jwt, { expires: 7 });
-        const getToken = Cookies.get(AUTH_TOKEN);
-        if (getToken) {
-          setIsLoggedIn(true);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
+  const navigate = useNavigate();
+
+  function handleAuthenticationSuccess(data) {
+    if (data.status === "fail") {
+      toast.error(data.message || errorMessage);
     }
-  };
 
-  const loginHandler = async (body) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch("http://localhost:1337/api/auth/local", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
+    if (data.status === "success") {
+      toast.success(`Welcome ${data.data.name}`);
+      Cookies.set(AUTH_TOKEN_KEY, data.token, {
+        expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
       });
-      const data = await response.json();
-      if (data?.error) {
-        throw data?.error;
-      } else {
-        Cookies.set(AUTH_TOKEN, data.jwt, { expires: 7 });
-        console.log(data.jwt);
-        setIsLoggedIn(true);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
+      setIsLoggedIn(true);
+      navigate("/");
     }
-  };
+  }
+
+  const { isPending: isLoggingIn, mutate: onLogin } = useMutation({
+    mutationFn: login,
+    mutationKey: ["currentUser"],
+    onSuccess(data) {
+      handleAuthenticationSuccess(data);
+    },
+  });
+
+  const { isPending: isSigningUp, mutate: onSignUp } = useMutation({
+    mutationFn: signup,
+    mutationKey: ["currentUser"],
+    onSuccess(data) {
+      handleAuthenticationSuccess(data);
+    },
+  });
 
   useEffect(() => {
     if (authToken) {
@@ -77,18 +58,20 @@ export const AuthContextProvider = (props) => {
     }
   }, [authToken]);
 
-  const logoutHandler = () => {
+  const logout = () => {
     setIsLoggedIn(false);
-    Cookies.remove(AUTH_TOKEN);
+    Cookies.remove(AUTH_TOKEN_KEY);
   };
+
   return (
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
-        onLoading: isLoading,
-        onSignUp: signupHandler,
-        onLogin: loginHandler,
-        onLogout: logoutHandler,
+        isLoggingIn,
+        onSignUp,
+        onLogin,
+        isSigningUp,
+        logout,
       }}
     >
       {props.children}

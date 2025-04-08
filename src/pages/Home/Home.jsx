@@ -1,12 +1,11 @@
-// eslint-disable-next-line no-unused-vars
-import Container from "../../components/UI/Container";
-import TodoList from "../../components/TodoList/TodoList";
+import { useContext } from "react";
+import TodoList from "../../components/TodoList";
+import UnauthWelcome from "../../components/UnauthWelcome";
+import AuthContext from "../../context/AuthContext";
+
 function Home() {
-  return (
-    <Container>
-      <TodoList />
-    </Container>
-  );
+  const { isLoggedIn } = useContext(AuthContext);
+  return <div>{isLoggedIn ? <TodoList /> : <UnauthWelcome />}</div>;
 }
 
 export default Home;

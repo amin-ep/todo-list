@@ -1,0 +1,9 @@
+.highlight {
+  background: linear-gradient(
+    90deg,
+    var(--color-pink-300),
+    var(--color-indigo-400)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

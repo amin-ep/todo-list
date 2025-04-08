@@ -1,0 +1,88 @@
+.container {
+  text-align: center;
+  padding: 1rem 0.25rem;
+}
+
+.emoji {
+}
+
+.error-code {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error-code span {
+  font-size: 90px;
+  color: var(--color-white);
+}
+
+.back-link {
+  padding: 0.75rem;
+  text-decoration: none;
+  background: linear-gradient(
+    120deg,
+    var(--color-pink-300),
+    var(--color-sky-300)
+  );
+  color: var(--color-gray-900);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+
+.emoji {
+  width: 40vw;
+}
+
+@media (min-width: 425px) {
+  .error-code span {
+    font-size: 102px;
+  }
+}
+
+@media (min-width: 475px) {
+  .error-code span {
+    font-size: 112px;
+  }
+
+  .back-link {
+    padding: 1rem;
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 525px) {
+  .emoji {
+    width: 30vw;
+  }
+}
+
+@media (min-width: 640px) {
+  .error-code span {
+    font-size: 188px;
+  }
+}
+
+@media (min-width: 768px) {
+  .emoji {
+    width: 20vw;
+  }
+  .error-code span {
+    font-size: 200px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .emoji {
+    width: 15vw;
+  }
+  .error-code span {
+    font-size: 248px;
+  }
+}

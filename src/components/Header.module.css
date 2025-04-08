@@ -1,0 +1,52 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  width: 42rem;
+  margin: 0 auto;
+  max-width: 95%;
+}
+
+.logo {
+  text-decoration: none;
+  font-family: var(--font-dancing-script);
+  font-size: 40px;
+  color: #fff;
+  text-align: center;
+  user-select: none;
+  animation: 1.2s ease-out logoFadeIn;
+  -webkit-animation: 1.2s ease-out logoFadeIn;
+}
+
+@media (min-width: 425px) {
+  .logo {
+    font-size: 44px;
+  }
+}
+
+@media (min-width: 768px) {
+  .logo {
+    font-size: 52px;
+  }
+}
+
+@keyframes logoFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+    -webkit-transform: translateX(-10px);
+    -moz-transform: translateX(-10px);
+    -ms-transform: translateX(-10px);
+    -o-transform: translateX(-10px);
+  }
+
+  100% {
+    opacity: 100;
+    transform: translateX(0);
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+  }
+}
