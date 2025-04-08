@@ -11,6 +11,8 @@
   -o-border-radius: 0.875rem;
 
   background-color: var(--color-white);
+
+  grid-template-columns: repeat(3, 3.25rem);
 }
 
 .nav-item {

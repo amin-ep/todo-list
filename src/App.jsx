@@ -15,6 +15,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { lazy, Suspense } from "react";
 import PageLoader from "./components/PageLoader";
 import Notfound from "./components/Notfound";
+import ProtectedRoutes from "./layout/ProtectedRoutes";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const Login = lazy(() => import("./pages/Login/Login"));
@@ -24,8 +25,10 @@ const Edit = lazy(() => import("./pages/Edit/Edit"));
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<RootLayout />}>
-      <Route path="edit/:id" element={<Edit />} />
-      <Route path="/create" element={<Create />} />
+      <Route element={<ProtectedRoutes />}>
+        <Route path="edit/:id" element={<Edit />} />
+        <Route path="/create" element={<Create />} />
+      </Route>
       <Route path="/login" element={<Login />} />
       <Route index path="/" element={<Home />} />
       <Route path="/signup" element={<Signup />} />

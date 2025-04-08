@@ -11,24 +11,19 @@ function Nav() {
   const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (
-    <nav
-      className={classes.nav}
-      style={{
-        gridTemplateColumns: `repeat(${!isLoggedIn ? 2 : 3}, 3.25rem)`,
-      }}
-    >
+    <nav className={classes.nav}>
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          `${classes["nav-item"]} ${classes.home} ${
+            isActive ? classes.active : ""
+          }`
+        }
+      >
+        <GrHomeRounded className={classes.icon} />
+      </NavLink>
       {isLoggedIn ? (
         <>
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `${classes["nav-item"]} ${classes.home} ${
-                isActive ? classes.active : ""
-              }`
-            }
-          >
-            <GrHomeRounded className={classes.icon} />
-          </NavLink>
           <NavLink
             to="/create"
             className={({ isActive }) =>

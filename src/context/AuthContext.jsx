@@ -61,6 +61,8 @@ export const AuthContextProvider = (props) => {
   const logout = () => {
     setIsLoggedIn(false);
     Cookies.remove(AUTH_TOKEN_KEY);
+    toast.success("You logged out!");
+    navigate("/login");
   };
 
   return (
