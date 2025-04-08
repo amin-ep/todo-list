@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { getMyTodos } from "../services/todoApi";
-import classes from "./TodoList.module.css";
-import TodoListItem from "./TodoListItem";
 import Heading from "../UI/Heading";
 import Highlight from "../UI/Highlight";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import Subtitle from "../UI/Subtitle";
 import Note from "../UI/Note";
+import Subtitle from "../UI/Subtitle";
+import classes from "./TodoList.module.css";
+import TodoListItem from "./TodoListItem";
 
 export default function TodoList() {
   const { data, isLoading } = useQuery({

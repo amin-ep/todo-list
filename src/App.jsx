@@ -44,7 +44,7 @@ function App() {
   });
   return (
     <QueryClientProvider client={client}>
-      <ReactQueryDevtools client={client} />
+      {/* <ReactQueryDevtools client={client} /> */}
       <Toaster position="top-right" />
       <Suspense fallback={<PageLoader />}>
         <RouterProvider router={router} />
